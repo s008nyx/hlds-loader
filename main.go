@@ -18,7 +18,7 @@ type Item struct {
 
 func main() {
 	fmt.Println("----------------------------------------------------")
-	fmt.Println("------------| (Re)HLDS Installer v0.1 |-------------")
+	fmt.Println("------------| (Re)HLDS Installer v0.4 |-------------")
 	fmt.Println("----------------------------------------------------")
 
 	routes := make(map[int]string)
@@ -75,16 +75,16 @@ func list(routes map[int]string, item Item, depth int) {
 	}
 
 	fmt.Println("Choose item (enter number):")
-	fmt.Printf("\n--------------------------------\n")
+	fmt.Printf("--------------------------------\n")
     for i, item := range data{
        if isFile(item) {
-       	   fmt.Printf("%d: %s (%d Mb)\n", i + 1, item.Name, item.Size / 1024 / 1024)
+       	   fmt.Printf("%-3d | %-110s | %-9s |\n", i + 1, item.Name, ByteCountDecimal(item.Size))
        } else {
-       	   fmt.Printf("%d: %s\n", i + 1, item.Name)
+       	   fmt.Printf("%-3d | %-110s |    ---    |\n", i + 1, item.Name)
        }
     }
 
- 	fmt.Printf("\n--------------------------------\n")
+ 	fmt.Printf("--------------------------------\n")
  	if depth <= 0 {
     	fmt.Printf("0: Exit\n")
 	} else {
@@ -155,4 +155,17 @@ func load(routes map[int]string, item Item, depth int) error {
 	}
 
 	return nil
+}
+
+func ByteCountDecimal(b uint64) string {
+    const unit = 1000
+    if b < unit {
+        return fmt.Sprintf("%d B", b)
+    }
+    div, exp := int64(unit), 0
+    for n := b / unit; n >= unit; n /= unit {
+        div *= unit
+        exp++
+    }
+    return fmt.Sprintf("%.1f %cB", float64(b)/float64(div), "kMGTPE"[exp])
 }
