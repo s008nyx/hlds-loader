@@ -103,9 +103,11 @@ func list(routes map[int]string, item Item, depth int) {
 		
 	}
 
-	if point - 1 <= len(data) {
+	if point <= len(data) {
 		do(routes, data[point - 1], depth + 1)
-	} 
+	} else {
+		fmt.Printf("\n===============\nItem with key %d not found\n===============\n\n", point)
+	}
 
 	do(routes, item, depth)
 }
