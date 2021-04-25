@@ -18,7 +18,7 @@ type Item struct {
 
 func main() {
 	fmt.Println("----------------------------------------------------")
-	fmt.Println("------------| (Re)HLDS Installer v0.4 |-------------")
+	fmt.Println("------------| (Re)HLDS Installer v0.5 |-------------")
 	fmt.Println("----------------------------------------------------")
 
 	routes := make(map[int]string)
