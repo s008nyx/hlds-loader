@@ -7,6 +7,7 @@ import (
 	"io/ioutil"
 	"os"
 	"io"
+	"strconv"
 )
 
 type Item struct {
@@ -18,7 +19,7 @@ type Item struct {
 
 func main() {
 	fmt.Println("----------------------------------------------------")
-	fmt.Println("------------| (Re)HLDS Installer v0.5 |-------------")
+	fmt.Println("------------| (Re)HLDS Installer v0.4 |-------------")
 	fmt.Println("----------------------------------------------------")
 
 	routes := make(map[int]string)
@@ -91,10 +92,22 @@ func list(routes map[int]string, item Item, depth int) {
 		fmt.Printf("0: Back\n")
 	}
 
-    var point int
-	fmt.Scanf("%d\n", &point)
+    var point string
+	fmt.Scanf("%s\n", &point)
+	key := 0
 
-	if point == 0 {
+	if len(point) > 0 {
+		num, err := strconv.Atoi(point)
+
+		if err != nil {
+			fmt.Printf("\n===============\nInvalid key\n===============\n\n")
+			do(routes, item, depth)
+		}
+
+		key = num
+	}
+
+	if key == 0 {
 		if depth <= 0 {
 			os.Exit(0)
 		} else {
@@ -103,10 +116,10 @@ func list(routes map[int]string, item Item, depth int) {
 		
 	}
 
-	if point <= len(data) {
-		do(routes, data[point - 1], depth + 1)
+	if key <= len(data) {
+		do(routes, data[key - 1], depth + 1)
 	} else {
-		fmt.Printf("\n===============\nItem with key %d not found\n===============\n\n", point)
+		fmt.Printf("\n===============\nItem with key %d not found\n===============\n\n", key)
 	}
 
 	do(routes, item, depth)
