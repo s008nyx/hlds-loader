@@ -1,4 +1,5 @@
-project_name: example
+project_name: hlds-loader
+
 builds:
   - env: [CGO_ENABLED=0]
     goos:
