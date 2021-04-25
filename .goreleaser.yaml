@@ -5,6 +5,10 @@ builds:
     goos:
       - linux
       - windows
+      - freebsd
     goarch:
       - amd64
-      - arm64
+      - 386
+
+archives:
+  - format: zip
